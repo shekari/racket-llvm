@@ -11,7 +11,7 @@
      ((macosx) '("-dynamiclib" "-undefined" "suppress" "-flat_namespace"))))
   (define architecture-flags
     (case os
-      ((unix) '("-m32"))
+      ((unix) empty)
       ((macosx) empty)))
   (define output-redirection-flags
     `("-o" 
@@ -37,7 +37,7 @@
     (close-output-port in)
     (close-input-port out)
     (subprocess-wait process)
-   (unless (= (subprocess-status process) 0) (error 'g++ "Returned non zero exit code"))))
+   (unless (= (subprocess-status process) 0) (error (car compiler) "Returned non zero exit code"))))
 
 (define (llvm-config flags)
  (define (remove-blanks lst)
